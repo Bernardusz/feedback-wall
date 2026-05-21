@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS posts(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     like_count INT DEFAULT 0,
     dislike_count INT DEFAULT 0,
-    comment_count INT DEFAULT 0
+    comment_count INT DEFAULT 0,
+    views INT DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS comments(

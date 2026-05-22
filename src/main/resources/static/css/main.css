@@ -1,0 +1,61 @@
+body {
+    font-family: sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    background-color: #ffffff;
+}
+
+.post-card {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid #eee;
+}
+
+.comment-box {
+    border-left: 3px solid #007bff;
+    padding-left: 15px;
+    margin: 15px 0;
+    background: #fff;
+}
+
+.comment-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.actions {
+    font-size: 0.85em;
+    color: #555;
+    margin-top: 5px;
+}
+
+.actions button {
+    cursor: pointer;
+    margin-right: 5px;
+    background: none;
+    border: none;
+    color: #007bff;
+    text-decoration: underline;
+    padding: 0;
+}
+
+.actions button:hover {
+    color: #0056b3;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.container {
+	border-radius: 1rem;
+	box-shadow: #0056b3;
+	display: grid;
+	grid-template-columns: repeat(1, minmax(0, 1fr));
+}

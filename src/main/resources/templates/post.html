@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">Feedback Wall Post</title>
+    
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body>
+
+    <a href="/">← Back to Wall</a>
+
+    <div class="post-card">
+        <h1 th:text="${post.title}">Post Title</h1>
+        <p th:text="${post.content}">Post content...</p>
+        <div class="actions">
+            👁️ <span th:text="${post.views}">0</span> views | 
+            💬 <span id="main-comment-count" th:text="${post.commentCount}">0</span> comments
+        </div>
+    </div>
+
+    <h3>Add a Comment</h3>
+    <div class="comment-form">
+        <textarea id="new-comment-content" rows="3" placeholder="Write your feedback..."></textarea>
+        <br>
+        <button id="submit-comment-btn" th:data-post-id="${post.id}">Submit Comment</button>
+    </div>
+
+    <h3>Comments</h3>
+    <div id="comments-container">
+        <div class="comment-box" th:each="comment : ${comments}" th:id="'comment-node-' + ${comment.id}">
+            
+            <div th:id="'view-mode-' + ${comment.id}">
+                <p th:id="'comment-text-' + ${comment.id}" th:text="${comment.content}">Comment body</p>
+                <div class="actions">
+                    <button class="edit-btn" th:data-id="${comment.id}">Edit</button>
+                    <button class="delete-btn" th:data-id="${comment.id}">Delete</button>
+                </div>
+            </div>
+
+            <div th:id="'edit-mode-' + ${comment.id}" class="hidden">
+                <textarea th:id="'edit-input-' + ${comment.id}" rows="2" th:text="${comment.content}"></textarea>
+                <div class="actions">
+                    <button class="save-btn" th:data-id="${comment.id}">Save</button>
+                    <button class="cancel-btn" th:data-id="${comment.id}">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+</html>

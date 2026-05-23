@@ -11,12 +11,30 @@
     <a href="/">← Back to Wall</a>
 
     <div class="post-card">
-        <h1 th:text="${post.title}">Post Title</h1>
+        <div class="small-container">
+			<h1 th:text="${post.title}">Post Title</h1>
+			<div>
+				<a th:href="@{/edit/{id}(id=${post.id})}">
+				<button class="btn">Edit</button>
+				</a>
+				<form th:action="@{/delete/{id}(id=${post.id})}" method="post" style="display:inline;">
+					<button class="btn">Delete</button>
+				</form>
+			</div>
+		</div>
         <p th:text="${post.content}">Post content...</p>
         <div class="actions">
             👁️ <span th:text="${post.views}">0</span> views | 
             💬 <span id="main-comment-count" th:text="${post.commentCount}">0</span> comments
         </div>
+		<div class="actions-flex">
+			<a style="color: #555;" th:href="@{/like/{id}(id=${post.id})}">
+				👍 <span th:text="${post.likeCount}">0</span> likes | 
+			</a>
+			<a style="color: #555;" th:href="@{/dislike/{id}(id=${post.id})}">
+				👎 <span th:text="${post.dislikeCount}">0</span> dislikes
+			</a>
+		</div>
     </div>
 
     <h3>Add a Comment</h3>

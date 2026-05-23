@@ -26,7 +26,7 @@ public class WallService {
     postRepository.incrementComment(postId);
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public PostDetails showPost(long postId) {
     postRepository.incrementViews(postId);
 
@@ -34,5 +34,12 @@ public class WallService {
     List<Comment> comments = commentRepository.findByPostId(postId);
 
     return  new PostDetails(post, comments);
+  }
+
+  @Transactional
+  public void deleteComment(long commentId) {
+    Comment comment = commentRepository.findByCommentId(commentId);
+    postRepository.decrementComment(comment.postId());
+    commentRepository.delete(commentId);
   }
 }

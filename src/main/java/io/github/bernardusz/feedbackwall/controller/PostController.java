@@ -2,11 +2,14 @@ package io.github.bernardusz.feedbackwall.controller;
 
 import io.github.bernardusz.feedbackwall.model.Post;
 import io.github.bernardusz.feedbackwall.model.PostDetails;
+import io.github.bernardusz.feedbackwall.model.PostRequest;
 import io.github.bernardusz.feedbackwall.repository.PostRepository;
 import io.github.bernardusz.feedbackwall.service.WallService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 
 @Controller
 @RequestMapping("/")
@@ -42,13 +45,14 @@ public class PostController {
 
 
   @GetMapping("/new") // Create - Page
-  public String newPost(){
+  public String newPost(Model model){
+    model.addAttribute("post", Post.empty());
     return "new_post";
   }
 
   @PostMapping("/create") // Create - Action
-  public  String createPost(@ModelAttribute("post") Post post){
-    postRepository.create(post);
+  public  String createPost(@ModelAttribute PostRequest postRequest){
+    postRepository.create(postRequest);
     return "redirect:/";
   }
 
@@ -59,10 +63,10 @@ public class PostController {
     return "edit_post";
   }
 
-  @PostMapping("/update") // Update - Action
-  public String updatePost(@ModelAttribute("post") Post post){
-    postRepository.update(post);
-    return "redirect:/";
+  @PostMapping("/update/{id}") // Update - Action
+  public String updatePost(@ModelAttribute PostRequest post, @PathVariable long id){
+    postRepository.update(post, id);
+    return "redirect:/" + id;
   }
 
 

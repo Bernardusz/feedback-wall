@@ -1,6 +1,7 @@
 package io.github.bernardusz.feedbackwall.repository;
 
 import io.github.bernardusz.feedbackwall.model.Post;
+import io.github.bernardusz.feedbackwall.model.PostRequest;
 import io.github.bernardusz.feedbackwall.model.PostSummary;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ public class PostRepository {
   public List<PostSummary> findAll(){
     return jdbcClient.sql("""
             SELECT 
-            id, title, created_at, like_count, dislike_count, comment_count 
+            id, title, created_at, like_count, dislike_count, comment_count, views
             FROM posts
             ORDER BY created_at ASC
             """)
@@ -26,14 +27,8 @@ public class PostRepository {
 
   public List<PostSummary> findByTitle(String title){
     return jdbcClient
-        .sql("""
-            SELECT 
-            id, title, created_at, like_count, dislike_count, comment_count 
-            FROM posts
-            WHERE title ILIKE ?
-            ORDER BY created_at ASC
-            """)
-        .param(title)
+        .sql("SELECT id, title, created_at, like_count, dislike_count, comment_count, views FROM posts WHERE title ILIKE ? ORDER BY created_at ASC")
+        .param("%" + title + "%")
         .query(PostSummary.class)
         .list();
   }
@@ -43,14 +38,14 @@ public class PostRepository {
       .param(id).query(Post.class).single();
   }
 
-  public void create(Post post){
+  public void create(PostRequest post){
     jdbcClient.sql("INSERT INTO posts (title, content) VALUES (?, ?)")
       .params(post.title(), post.content()).update();
   }
 
-  public  void update(Post post){
+  public  void update(PostRequest post, long id){
     jdbcClient.sql("UPDATE posts SET title = ?, content = ? WHERE id = ?")
-      .params(post.title(), post.content(), post.id()).update();
+      .params(post.title(), post.content(), id).update();
   }
 
   public void delete(long id){
@@ -76,5 +71,10 @@ public class PostRepository {
   public  void incrementComment(long id){
     jdbcClient.sql("UPDATE posts SET comment_count = comment_count + 1 WHERE id = ?")
       .param(id).update();
+  }
+
+  public void decrementComment(long postId){
+	jdbcClient.sql("UPDATE posts SET comment_count = comment_count - 1 WHERE id = ?")
+	  .param(postId).update();
   }
 }

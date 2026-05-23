@@ -24,6 +24,11 @@ public class CommentRepository {
       .param(postId).query(Comment.class).list();
   }
 
+  public Comment findByCommentId(long commentId){
+    return jdbcClient.sql("SELECT * FROM comments WHERE id = ?")
+      .param(commentId).query(Comment.class).single();
+  }
+
   public void create(long postId, String content){
     jdbcClient.sql("INSERT INTO comments (post_id, content) VALUES (?, ?)")
       .params(postId, content).update();

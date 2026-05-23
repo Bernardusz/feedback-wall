@@ -11,5 +11,9 @@ public record Post(
   int dislikeCount,
   int commentCount,
   int views
-) {}
+) {
+  public static Post empty() {
+    return new Post(null, "", "", null, 0, 0, 0, 0);
+  }
+}
 

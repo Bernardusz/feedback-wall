@@ -8,9 +8,9 @@
 </head>
 <body>
     <main>
-		<h1>New Post</h1>
+		<h1>Edit Post</h1>
         <hr/>
-		<form class="container" th:action="@{/update}" method="post" th:object="${post}">
+		<form th:action="@{/update/{id}(id=${post.id})}" method="post" th:object="${post}">
 			<div>
 				<label for="title">Title</label>
 				<input type="text" id="title" name="title" th:field="*{title}">
@@ -20,7 +20,7 @@
 				<textarea id="content" name="content" th:field="*{content}"></textarea>
 			</div>
 			<div>
-				<input class="button" type="submit" value="Create">
+				<button type="submit">Edit</button>
 			</div>
 		</form>
     </main>

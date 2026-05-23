@@ -8,26 +8,30 @@
 </head>
 <body>
     <main>
-		<div>
+		<div id="title">
 			<h1>Feedback Wall</h1>
 			<div id="new-post">
-				<a href="/new">New Post</a>
+				<a href="/new">
+					<button class="btn">New Post</button>
+				</a>
 			</div>
 		</div>
         <hr/>
-        <div th:each="post : ${posts}" class="post-card">
-            <a th:href="@{/{id}(id=${post.id})}">
+        <div class="container">
+			<div th:each="post : ${posts}" class="post-card">
+				<a th:href="@{/{id}(id=${post.id})}">
 					<h1 th:text="${post.title}"></h1>
 					<hr/>
 					<p th:text="${post.createdAt}"></p>
 					<hr/>
-					<div>
+					<div class="small-container">
 						<span th:text="${post.views}"></span>
 						<span th:text="${post.likeCount}"></span>
 						<span th:text="${post.dislikeCount}"></span>
 					</div>
-			</a>
-        </div>
+				</a>
+			</div>
+		</div>
     </main>
 </body>
 </html>
